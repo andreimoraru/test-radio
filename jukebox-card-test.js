@@ -1,4 +1,4 @@
-class JukeboxCard extends HTMLElement {
+class JukeboxCardTest extends HTMLElement {
     set hass(hass) {
         if (!this.content) {
             this._hassObservers = [];
@@ -297,4 +297,4 @@ function getStyle() {
     return frag;
 }
 
-customElements.define('jukebox-card-test', JukeboxCard);
+customElements.define('jukebox-card-test', JukeboxCardTest);
