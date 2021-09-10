@@ -297,4 +297,4 @@ function getStyle() {
     return frag;
 }
 
-customElements.define('jukebox-card-test', JukeboxCardTest);
+customElements.define('jukebox-card-t', JukeboxCardTest);
