@@ -188,7 +188,7 @@ class JukeboxCardTest extends HTMLElement {
         setTimeout(function() {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker});
-            }, 10000);
+            }, 3000);
     }
 
     setVolume(value) {
