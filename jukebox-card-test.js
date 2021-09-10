@@ -183,7 +183,7 @@ class JukeboxCardTest extends HTMLElement {
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
-            media_content_type: 'audio/mp4'
+            media_content_type: 'LIVE'
         });
         setTimeout(function() {
             this.hass.callService('media_player', 'media_play', {
