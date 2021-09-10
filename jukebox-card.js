@@ -185,6 +185,10 @@ class JukeboxCard extends HTMLElement {
             media_content_id: e.currentTarget.stationUrl,
             media_content_type: 'audio/mp4'
         });
+        setTimeout(function() {
+            this.hass.callService('media_player', 'media_play', {
+                entity_id: this._selectedSpeaker});
+        }, 5000);
     }
 
     setVolume(value) {
