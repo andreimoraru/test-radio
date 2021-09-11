@@ -301,4 +301,4 @@ function getStyle() {
     return frag;
 }
 
-customElements.define('amoraru-jukebox-card', JukeboxCardTest);
+customElements.define('test-jukebox-card', JukeboxCardTest);
