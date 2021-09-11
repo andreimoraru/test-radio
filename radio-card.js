@@ -200,6 +200,9 @@ class JukeboxCardTest extends HTMLElement {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
+            for (let i = 1; i <= 15; i++) {
+                setTimeout(() => console.log(`waiting #${i}`), 1000 * i)
+              }
             if(this.hass.states[this._selectedSpeaker].state === 'playing') {
                 break;
             }
