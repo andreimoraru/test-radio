@@ -185,14 +185,14 @@ class JukeboxCardTest extends HTMLElement {
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
-            // media_content_type: 'audio/mpeg'
+            /* media_content_type: 'audio/mpeg' */
             media_content_type: e.currentTarget.stationMediaContentType,
             stream_type: e.currentTarget.stationStreamType
         });
-        // setTimeout(function() {
+        /*  setTimeout(function() {
         //     this.hass.callService('media_player', 'media_play', {
         //         entity_id: this._selectedSpeaker});
-        //     }, 5000);
+             }, 5000); */
     }
 
     setVolume(value) {
