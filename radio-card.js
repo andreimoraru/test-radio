@@ -192,12 +192,12 @@ class JukeboxCardTest extends HTMLElement {
                 title: e.currentTarget.innerText
             }
         });
-        /*  setTimeout(function() {
-        //     this.hass.callService('media_player', 'media_play', {
-        //         entity_id: this._selectedSpeaker});
-             }, 5000); */
-        this.hass.callService('media_player', 'media_play', {
-            entity_id: this._selectedSpeaker});
+          setTimeout(function() {
+             this.hass.callService('media_player', 'media_play', {
+                 entity_id: this._selectedSpeaker});
+                }, 5000);
+        /* this.hass.callService('media_player', 'media_play', {
+            entity_id: this._selectedSpeaker});*/
     }
 
     setVolume(value) {
