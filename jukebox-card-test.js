@@ -189,10 +189,10 @@ class JukeboxCardTest extends HTMLElement {
             media_content_type: e.currentTarget.media_content_type,
             stream_type = e.currentTarget.stream_type
         });
-        setTimeout(function() {
-            this.hass.callService('media_player', 'media_play', {
-                entity_id: this._selectedSpeaker});
-            }, 5000);
+        // setTimeout(function() {
+        //     this.hass.callService('media_player', 'media_play', {
+        //         entity_id: this._selectedSpeaker});
+        //     }, 5000);
     }
 
     setVolume(value) {
@@ -301,4 +301,4 @@ function getStyle() {
     return frag;
 }
 
-customElements.define('jukebox-card-t', JukeboxCardTest);
+customElements.define('amoraru-jukebox-card', JukeboxCardTest);
