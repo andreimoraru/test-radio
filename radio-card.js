@@ -201,7 +201,7 @@ class JukeboxCardTest extends HTMLElement {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
-            await sleepNow(1000);
+            sleepNow(1000);
         
             // make sure the update method is notified of a change
             this._hassObservers.push(this.updateStationSwitchStates.bind(this));
