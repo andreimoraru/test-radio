@@ -187,7 +187,7 @@ class JukeboxCardTest extends HTMLElement {
             media_content_id: e.currentTarget.stationUrl,
             // media_content_type: 'audio/mpeg'
             media_content_type: e.currentTarget.media_content_type,
-            stream_type = e.currentTarget.stream_type
+            stream_type: e.currentTarget.stream_type
         });
         // setTimeout(function() {
         //     this.hass.callService('media_player', 'media_play', {
