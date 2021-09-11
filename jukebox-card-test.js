@@ -49,7 +49,7 @@ class JukeboxCardTest extends HTMLElement {
         stationList.classList.add('station-list');
 
         this.config.links.forEach(linkCfg => {
-            const stationButton = this.buildStationSwitch(linkCfg.name, linkCfg.url)
+            const stationButton = this.buildStationSwitch(linkCfg.name, linkCfg.url, linkCfg.media_content_type, linkCfg.stream_type)
             this._stationButtons.push(stationButton);
             stationList.appendChild(stationButton);
         });
@@ -170,9 +170,11 @@ class JukeboxCardTest extends HTMLElement {
         })
     }
 
-    buildStationSwitch(name, url) {
+    buildStationSwitch(name, url, media_content_type, stream_type) {
         const btn = document.createElement('mwc-button');
         btn.stationUrl = url;
+        btn.stationMediaContentType = media_content_type;
+        btn.stationStreamType = stream_type;
         btn.className = 'juke-toggle';
         btn.innerText = name;
         btn.addEventListener('click', this.onStationSelect.bind(this));
@@ -183,7 +185,9 @@ class JukeboxCardTest extends HTMLElement {
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
-            media_content_type: 'audio/mpeg'
+            // media_content_type: 'audio/mpeg'
+            media_content_type: e.currentTarget.media_content_type,
+            stream_type = e.currentTarget.stream_type
         });
         setTimeout(function() {
             this.hass.callService('media_player', 'media_play', {
