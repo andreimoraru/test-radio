@@ -193,7 +193,7 @@ class JukeboxCardTest extends HTMLElement {
                 title: e.currentTarget.innerText
             }
         });
-        await sleepNow(3000)
+        await sleepNow(2000)
         this.hass.callService('media_player', 'media_play', {
             entity_id: this._selectedSpeaker});
           /*setTimeout(function() {
