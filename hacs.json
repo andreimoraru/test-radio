@@ -1,5 +1,5 @@
 {
-    "name": "Radio Card",
+    "name": "Lovelace Jukebox Card",
     "render_readme": false,
-    "filename": "radio-card.js"
+    "filename": "jukebox-card.js"
 }
