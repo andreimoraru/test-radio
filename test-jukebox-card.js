@@ -205,7 +205,7 @@ class JukeboxCard extends HTMLElement {
                 entity_id: this._selectedSpeaker
             });
             
-            await sleepNow(1000);
+            await sleepNow(500);
             
             this.onSpeakerSelect(this._selectedSpeaker);
         }
