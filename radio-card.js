@@ -170,7 +170,7 @@ class JukeboxCardTest extends HTMLElement {
         })
     }
 
-    buildStationSwitch(name, url, media_content_type, stream_type) {
+    buildStationSwitch(name, url, media_content_type='music', stream_type='LIVE') {
         const btn = document.createElement('mwc-button');
         btn.stationUrl = url;
         btn.stationMediaContentType = media_content_type;
