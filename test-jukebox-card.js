@@ -206,6 +206,7 @@ class JukeboxCard extends HTMLElement {
             });
             
             await sleepNow(500);
+            console.log(this.hass.states[this._selectedSpeaker].state)
             
             this.onSpeakerSelect(this._selectedSpeaker);
         }
