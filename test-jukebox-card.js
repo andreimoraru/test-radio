@@ -182,9 +182,18 @@ class JukeboxCard extends HTMLElement {
     }
 
     async onStationSelect(e) {
-
+        /** simple sleep() function as per https://blog.devgenius.io/how-to-make-javascript-sleep-or-wait-d95d33c99909 */
         const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
+        /** scenario when you hit on hit one more time on a station that is playing
+         * 1) call the onStop function
+         * 2) setting state field with idle value
+        */
+
+        if(this.hass.states[this._selectedSpeaker].state === 'playing' && this.hass.states[this._selectedSpeaker].attributes.media_content_id === e.currentTarget.stationUrl){
+            this.onStop(e);
+            this.hass.states[this._selectedSpeaker].state = "idle"
+        }
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
@@ -195,25 +204,52 @@ class JukeboxCard extends HTMLElement {
                 title: e.currentTarget.innerText
             }
         });
-        /*await sleepNow(2000)
-        this.hass.callService('media_player', 'media_play', {
-            entity_id: this._selectedSpeaker});*/
-          /*setTimeout(function() {
-             this.hass.callService('media_player', 'media_play', {
-                 entity_id: this._selectedSpeaker});
-                }, 5000);*/
+
         /* because e.currentTarget is going to be nulled after the Chromecast has state=playing, we need to store the stationUrl in a local variable */
         var stationUrl = e.currentTarget.stationUrl;
+
+        /** timeout in seconds for waiting for the Chromecast to start playing the media */
+        var playTimeout = 50;
+
+        /** how frequent in miliseconds we should send media_play commands for waiting for the Chromecast to start playing the media */
+        var playFrequency = 100;
+
+        /** timeout in seconds while we send media_play commands when the device reports back as having state not playing */
+        var idleTimeout = 3 * playTimeout * playFrequency;
+
         
-        while (this.hass.states[this._selectedSpeaker].state !== 'playing' || this.hass.states[this._selectedSpeaker].attributes.media_content_id !== stationUrl) {
+        var startTime = Date.now();
+        
+        /**Chromecast device has a buffer to fill in before actually playing any content. The loop below is aiming to send  mediap_play command to Chromecast device until it reports its state as playing.
+         * the additional check for media_content_id is required for the scenario when:
+         * 1) Chromecast is playing something and obviously its state is playing.
+         * 2) you try to play something else. Thus we compare the media_content_id value of whatever Chromecast device reports it is playing with the value of media_content_id that we sent it to play.
+         *    If the values are different, then send media_play command repeatedly until Chromecare device reports back a value for media_content_id equal to the one we asked to be played.
+         *    Note that condition that state is playing should be filled first.
+         * 3) Control loop lenght with a safety timeout of idleTimout seconds
+         * 4) In case the Chromecast reports back a playing state, then a message is logged at the developers tools console
+         *    Example: playing [MD] MAESTRO FM http://192.168.1.20:8000/md.maestrofm
+        */
+        while ((this.hass.states[this._selectedSpeaker].state !== 'playing' || this.hass.states[this._selectedSpeaker].attributes.media_content_id !== stationUrl) && Date.now() - startTime < idleTimeout) {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
+
+            await sleepNow(playFrequency);
             
-            await sleepNow(500);
-            console.log(this.hass.states[this._selectedSpeaker].state)
-            
-            this.onSpeakerSelect(this._selectedSpeaker);
+            if (this.hass.states[this._selectedSpeaker].state === 'playing' && this.hass.states[this._selectedSpeaker].attributes.media_content_id === stationUrl) {
+                console.log(this.hass.states[this._selectedSpeaker].state, this.hass.states[this._selectedSpeaker].attributes.media_title, this.hass.states[this._selectedSpeaker].attributes.media_content_id, "after", (Date.now() - startTime)/1000, "seconds");
+            }
+        }
+
+        /** Loop for sending the media_play command to Chromecast after it is reporting a playing state but doesn't actually play (perhaps the Chromecast device buffer is still filling with media stream data).
+         * By trying figured out the appropriate period to send this commands is about 5 seconds after it reported playing state but is not actually playing.
+        */
+        for (var i = 1; i <= playTimeout; ++i) {
+            setDelay(i);
+            this.hass.callService('media_player', 'media_play', {
+                entity_id: this._selectedSpeaker
+            });
         }
     }
 
