@@ -1,5 +1,5 @@
 {
-    "name": "Lovelace Jukebox Card",
+    "name": "Test Lovelace Jukebox Card",
     "render_readme": false,
-    "filename": "jukebox-card.js"
+    "filename": "test-jukebox-card.js"
 }

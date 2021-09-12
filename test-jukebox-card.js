@@ -321,4 +321,4 @@ function getStyle() {
     return frag;
 }
 
-customElements.define('jukebox-card', JukeboxCard);
+customElements.define('test-jukebox-card', JukeboxCard);
