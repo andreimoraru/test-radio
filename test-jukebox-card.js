@@ -245,8 +245,8 @@ class JukeboxCard extends HTMLElement {
         /** Loop for sending the media_play command to Chromecast after it is reporting a playing state but doesn't actually play (perhaps the Chromecast device buffer is still filling with media stream data).
          * By trying figured out the appropriate period to send this commands is about 5 seconds after it reported playing state but is not actually playing.
         */
-        for (var i = 1; i <= playTimeout; ++i) {
-            setDelay(i);
+         for (var i = 1; i <= playTimeout; ++i) {
+            await sleepNow(i);
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
