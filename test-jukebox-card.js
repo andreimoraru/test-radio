@@ -200,7 +200,10 @@ class JukeboxCard extends HTMLElement {
              this.hass.callService('media_player', 'media_play', {
                  entity_id: this._selectedSpeaker});
                 }, 5000);*/
-        while (this.hass.states[this._selectedSpeaker].state !== 'playing' || this.hass.states[this._selectedSpeaker].attributes.media_content_id !== e.currentTarget.stationUrl) {
+        /* because e.currentTarget is going to be nulled after the Chromecast has state=playing, we need to store the stationUrl in a local variable */
+        stationUrl = e.currentTarget.stationUrl;
+
+        while (this.hass.states[this._selectedSpeaker].state !== 'playing' || this.hass.states[this._selectedSpeaker].attributes.media_content_id !== stationUrl) {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
