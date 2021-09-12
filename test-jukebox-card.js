@@ -200,18 +200,14 @@ class JukeboxCard extends HTMLElement {
              this.hass.callService('media_player', 'media_play', {
                  entity_id: this._selectedSpeaker});
                 }, 5000);*/
-        while (this.hass.states[this._selectedSpeaker].state !== 'playing') {
+        while (hass.states[this._selectedSpeaker].state !== 'playing') {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
             });
             
-            sleepNow(1000);
+            await sleepNow(1000);
             
             this.onSpeakerSelect(this._selectedSpeaker);
-
-            if(this.hass.states[this._selectedSpeaker].state === 'playing') {
-                break;
-            }
         }
     }
 
