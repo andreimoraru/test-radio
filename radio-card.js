@@ -181,7 +181,7 @@ class JukeboxCardTest extends HTMLElement {
         return btn;
     }
 
-    onStationSelect(e) {
+    async onStationSelect(e) {
         const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
@@ -193,7 +193,7 @@ class JukeboxCardTest extends HTMLElement {
                 title: e.currentTarget.innerText
             }
         });
-        sleepNow(3000)
+        await sleepNow(3000)
         this.hass.callService('media_player', 'media_play', {
             entity_id: this._selectedSpeaker});
           /*setTimeout(function() {
