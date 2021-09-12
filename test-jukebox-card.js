@@ -182,8 +182,9 @@ class JukeboxCard extends HTMLElement {
     }
 
     async onStationSelect(e) {
+
         const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-        stationUrl = e.currentTarget.stationUrl;
+
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
@@ -202,7 +203,8 @@ class JukeboxCard extends HTMLElement {
                  entity_id: this._selectedSpeaker});
                 }, 5000);*/
         /* because e.currentTarget is going to be nulled after the Chromecast has state=playing, we need to store the stationUrl in a local variable */
-
+        var stationUrl = e.currentTarget.stationUrl;
+        
         while (this.hass.states[this._selectedSpeaker].state !== 'playing' || this.hass.states[this._selectedSpeaker].attributes.media_content_id !== stationUrl) {
             this.hass.callService('media_player', 'media_play', {
                 entity_id: this._selectedSpeaker
