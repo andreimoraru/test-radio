@@ -186,14 +186,16 @@ class JukeboxCard extends HTMLElement {
         const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
         /** scenario when you hit on hit one more time on a station that is playing
-         * 1) call the onStop function
-         * 2) setting state field with idle value
+         * 1) setting state field with idle value
         */
 
         if(this.hass.states[this._selectedSpeaker].state === 'playing' && this.hass.states[this._selectedSpeaker].attributes.media_content_id === e.currentTarget.stationUrl){
-            this.onStop(e);
             this.hass.states[this._selectedSpeaker].state = "idle"
         }
+
+        /** set a variable to use as a timestamp to compute later the time spend on getting the Chromecast from non-playing state to playing state */
+        var startTime = Date.now();
+        
         this.hass.callService('media_player', 'play_media', {
             entity_id: this._selectedSpeaker,
             media_content_id: e.currentTarget.stationUrl,
@@ -216,9 +218,6 @@ class JukeboxCard extends HTMLElement {
 
         /** timeout in seconds while we send media_play commands when the device reports back as having state not playing */
         var idleTimeout = 3 * playTimeout * playFrequency;
-
-        
-        var startTime = Date.now();
         
         /**Chromecast device has a buffer to fill in before actually playing any content. The loop below is aiming to send  mediap_play command to Chromecast device until it reports its state as playing.
          * the additional check for media_content_id is required for the scenario when:
