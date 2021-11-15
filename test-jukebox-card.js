@@ -84,9 +84,9 @@ class JukeboxCard extends HTMLElement {
         stopButton.setAttribute('disabled', true);
         stopButton.addEventListener('click', this.onStop.bind(this));
 
-        const haIconVolumeStop = document.createElement('ha-icon');
-        haIconVolumeStop.icon = 'hass:volume-stop';
-        stopButton.appendChild(haIconVolumeStop);
+        const haIconStop = document.createElement('ha-icon');
+        haIconStop.icon = 'hass:stop';
+        stopButton.appendChild(haIconStop);
 
 
         this._hassObservers.push(hass => {
