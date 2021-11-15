@@ -69,6 +69,10 @@ class JukeboxCard extends HTMLElement {
         muteButton.isMute = false;
         muteButton.addEventListener('click', this.onMuteUnmute.bind(this));
 
+        const haIconVolumeHigh = document.createElement('ha-icon');
+        haIconVolumeHigh.icon = 'hass:volume-high';
+        muteButton.appendChild(muteButton);
+
         const slider = document.createElement('ha-slider');
         slider.min = 0;
         slider.max = 100;
@@ -79,6 +83,10 @@ class JukeboxCard extends HTMLElement {
         stopButton.icon = 'hass:stop';
         stopButton.setAttribute('disabled', true);
         stopButton.addEventListener('click', this.onStop.bind(this));
+
+        const haIconVolumeStop = document.createElement('ha-icon');
+        haIconVolumeStop.icon = 'hass:volume-stop';
+        muteButton.appendChild(stopButton);
 
 
         this._hassObservers.push(hass => {
@@ -112,11 +120,11 @@ class JukeboxCard extends HTMLElement {
 
             if (speakerState.is_volume_muted && !slider.disabled) {
                 slider.disabled = true;
-                muteButton.icon = 'hass:volume-off';
+                haIconVolumeHigh.icon = 'hass:volume-off';
                 muteButton.isMute = true;
             } else if (!speakerState.is_volume_muted && slider.disabled) {
                 slider.disabled = false;
-                muteButton.icon = 'hass:volume-high';
+                haIconVolumeHigh.icon = 'hass:volume-high';
                 muteButton.isMute = false;
             }
         });
