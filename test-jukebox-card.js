@@ -71,7 +71,7 @@ class JukeboxCard extends HTMLElement {
 
         const haIconVolumeHigh = document.createElement('ha-icon');
         haIconVolumeHigh.icon = 'hass:volume-high';
-        muteButton.appendChild(muteButton);
+        muteButton.appendChild(haIconVolumeHigh);
 
         const slider = document.createElement('ha-slider');
         slider.min = 0;
@@ -86,7 +86,7 @@ class JukeboxCard extends HTMLElement {
 
         const haIconVolumeStop = document.createElement('ha-icon');
         haIconVolumeStop.icon = 'hass:volume-stop';
-        muteButton.appendChild(stopButton);
+        stopButton.appendChild(haIconVolumeStop);
 
 
         this._hassObservers.push(hass => {
